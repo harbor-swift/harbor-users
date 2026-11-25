@@ -1,0 +1,5 @@
+LICENSE
+Package.swift
+Package.resolved
+Containerfile
+.dockerignore

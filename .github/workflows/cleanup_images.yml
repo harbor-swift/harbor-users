@@ -1,0 +1,16 @@
+name: Clean up images
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cleanup:
+    name: Clean up images
+    permissions:
+      packages: write
+    uses: swift-microservices/ci/.github/workflows/cleanup_images.yml@f7b645aee1e52546bccba2ac7ff3f7381d07b0ef  # 1.8.0

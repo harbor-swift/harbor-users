@@ -39,8 +39,8 @@
     },
     {
       "identity" : "harbor-core",
-      "kind" : "localSourceControl",
-      "location" : "/Users/zrahawi/Developer/microservices-example/harbor-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/harbor-swift/harbor-core.git",
       "state" : {
         "revision" : "1bd36a10435d872396bf126f17b081da9c3c2cd5",
         "version" : "1.0.0"
@@ -48,8 +48,8 @@
     },
     {
       "identity" : "harbor-protos",
-      "kind" : "localSourceControl",
-      "location" : "/Users/zrahawi/Developer/microservices-example/harbor-protos",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/harbor-swift/harbor-protos.git",
       "state" : {
         "revision" : "9932778d73cf68a93cac932f1e36daadc0511444",
         "version" : "1.0.0"
