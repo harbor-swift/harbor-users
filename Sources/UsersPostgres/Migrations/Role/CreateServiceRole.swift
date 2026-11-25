@@ -25,8 +25,8 @@ package struct CreateServiceRole: DatabaseMigration {
 
     package func apply(connection: PostgresConnection, logger: Logger) async throws {
         // Role and database names take no bindings, so they're quoted as identifiers from configuration.
-        let role = "\"" + self.role.replacingOccurrences(of: "\"", with: "\"\"") + "\""
-        let database = "\"" + self.database.replacingOccurrences(of: "\"", with: "\"\"") + "\""
+        let role = "\"" + self.role.replacing("\"", with: "\"\"") + "\""
+        let database = "\"" + self.database.replacing("\"", with: "\"\"") + "\""
         let statements = [
             "CREATE ROLE \(role) LOGIN",
             "GRANT CONNECT ON DATABASE \(database) TO \(role)",
@@ -43,7 +43,7 @@ package struct CreateServiceRole: DatabaseMigration {
     }
 
     package func revert(connection: PostgresConnection, logger: Logger) async throws {
-        let role = "\"" + self.role.replacingOccurrences(of: "\"", with: "\"\"") + "\""
+        let role = "\"" + self.role.replacing("\"", with: "\"\"") + "\""
         let dropOwned = PostgresQuery(unsafeSQL: "DROP OWNED BY \(role)")
         let dropRole = PostgresQuery(unsafeSQL: "DROP ROLE IF EXISTS \(role)")
         try await connection.query(dropOwned, logger: logger)
