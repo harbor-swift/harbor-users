@@ -1,0 +1,38 @@
+name: Main
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# One push at a time publishes its image, in order.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+# No staging job or deploy.yml: the plan names no platform yet, so each commit's image is published and
+# attested but never deployed (harbor-plan, Decisions).
+jobs:
+  service:
+    name: Service
+    permissions:
+      contents: read
+      packages: write
+    uses: swift-microservices/ci/.github/workflows/service.yml@f7b645aee1e52546bccba2ac7ff3f7381d07b0ef  # 1.8.0
+    with:
+      linux_host_archs: '["aarch64"]'
+      foundation_linking_check_excluded_products: '["users"]'
+
+  attest:
+    name: Attest
+    needs: [service]
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    uses: swift-microservices/ci/.github/workflows/attest_image.yml@f7b645aee1e52546bccba2ac7ff3f7381d07b0ef  # 1.8.0
+    with:
+      image: ${{ needs.service.outputs.image }}

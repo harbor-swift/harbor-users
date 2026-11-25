@@ -1,0 +1,11 @@
+.build
+.swiftpm
+.git
+.github
+.DS_Store
+.env*
+.netrc
+*.pem
+*.key
+*.p12
+secrets

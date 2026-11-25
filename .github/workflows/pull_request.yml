@@ -1,0 +1,20 @@
+name: PR
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  service:
+    name: Service
+    uses: swift-microservices/ci/.github/workflows/service.yml@f7b645aee1e52546bccba2ac7ff3f7381d07b0ef  # 1.8.0
+    with:
+      linux_host_archs: '["aarch64"]'
+      foundation_linking_check_excluded_products: '["users"]'
